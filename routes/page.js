@@ -20,4 +20,4 @@ router.get('/join', renderJoin);
 // 루트 경로('/')로 GET 요청이 들어오면 renderMain 컨트롤러를 실행
 router.get('/', renderMain);
 
-module.express = router; // 라우터 객체를 모듈로 내보냄
+module.exports = router; // 라우터 객체를 모듈로 내보냄
