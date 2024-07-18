@@ -31,4 +31,4 @@ class Post extends Sequelize.Model { // Post 모델을 정의 하는 클래스
     } 
 }
 
-module.exports = Post; // Post 모델을 오듈로 내보냄.
+module.exports = Post; // Post 모델을 모듈로 내보냄.
