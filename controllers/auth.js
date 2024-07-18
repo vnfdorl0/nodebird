@@ -53,6 +53,6 @@ exports.login = (req, res, next) => {
 // 로그아웃 처리 함수
 exports.logout=(req, res) => {
     req.logout(() => { // req.logout 메서드를 호출하여 로그아웃 수행
-        res.reirect('/'); // 로그아웃 후 메인 페이지로 리다이렉트
+        res.redirect('/'); // 로그아웃 후 메인 페이지로 리다이렉트
     });
 };
