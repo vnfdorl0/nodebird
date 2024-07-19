@@ -1,4 +1,5 @@
-const User = require("../models/user");
+// '../models' 파일 -> User모델, Post 모델, Hashtag 모델 불러오기
+const {User, Post, Hashtag} = require("../models");
 
 // 프로필 페이지를 렌더링하는 함수 정의
 exports.renderProfile = (req, res) => {
@@ -23,7 +24,7 @@ exports.renderMain = async (req, res, next) => {
                 attributes: ['id', 'nick'],
             },
             // 생성시각(createAt)을 기준으로 내림차순(DESC) 정렬
-            order: [['createAt', 'DESC']],
+            order: [['createdAt', 'DESC']],
         });
         // 'main' 템플릿 렌더링, 'title' 및 'twits' 변수 설정
         // 'twits' 변수 -> 포스트 목록(posts) 설정
@@ -37,3 +38,29 @@ exports.renderMain = async (req, res, next) => {
         next(err); // 에러를 다른 미들웨어에 전달
     }
 }
+
+// 해시태그 페이지 렌더링 함수 정의
+exports.renderHashtag = async (req, res, next) => {
+    const query = req.query.hashtag; // URL 쿼리에서 해시태그 가져오기
+    if (!query) {
+        return res.redirect('/'); // 해시태그가 없으면 루트로 리다이렉트
+    }
+    try {
+        // 해시태그 제목으로 데이터베이스에서 해시태그 찾기
+        const hashtag = await Hashtag.findOne({ where: { title: query } });
+        let posts = []; // 포스트 목록 초기화
+        if (hashtag) {
+            // 해시태그가 존재하면 관련괸 포스트 가져오기
+            posts = await hashtag.getPosts({ include: [{ model: User }] });
+        }
+
+        // 'main' 템플릿 렌더링, 해시태그와 관련된 포스트 목록 설정
+        return res.render('main', {
+            title: `${query} | NodeBird`, // 페이지 타이틀에 해시태그 추가
+            twits: posts, // 트윗 목록 설정
+        });
+    } catch (error) {
+        console.error(error);
+        return next(error); // 에러를 다음 미들웨어에 전달
+    }
+};

@@ -3,7 +3,7 @@ const { Post, Hashtag } = require('../models'); // Sequelize 모델 -> Post, Has
 // 이미지 업로드 후 처리를 담당하는 함수
 exports.afterUploadImage = (req, res) => {
     console.log(req.file); // 업로드된 파일 객체의 정보 -> 콘솔에 출력
-    // 업로그된 파일의 경로를 JSON 응답으로 클라이언트에 전송
+    // 업로드된 파일의 경로를 JSON 응답으로 클라이언트에 전송
     res.json({ url: `/img${req.file.filename}` });
 };
 

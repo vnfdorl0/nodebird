@@ -7,7 +7,7 @@ const fs = require('fs'); // fs 모듈 -> 파일 시스템
 const { afterUploadImage, uploadPost } = require('../controllers/post');
 const { isLoggedIn } = require('../middlewares'); // 미들웨어 -> isLoggedIn 함수
 
-const router = express.Rputer();
+const router = express.Router(); // 라우터 객체 생성
 
 try {
     fs.readdirSync('uploads'); // 'uploads' 디렉토리의 파일 목록 읽기
