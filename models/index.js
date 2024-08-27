@@ -9,7 +9,7 @@ const config = require('../config/config')[env]; // 환경 설정 불러오기
 
 const db = {}; // 데이터베이스 객체 생성
 const sequelize = new Sequelize( // 데이터베이스 연결 설정
-  config.datagase, config.username, config.password, config,
+  config.database, config.username, config.password, config,
 );
 
 db.sequelize = sequelize; // Sequelize 인스턴스를 db 객체에 추가
